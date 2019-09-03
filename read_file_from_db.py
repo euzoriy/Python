@@ -15,7 +15,7 @@ stmt = "SELECT count(name) FROM sqlite_master WHERE type='table' AND name='"+tab
 
 c.execute(stmt)
 if c.fetchone()[0]==1:{
-        print("there is a table named ",tableName)
+        print("there is a table named '{}'".format(tableName))
         }
 
 tmp = c.execute('SELECT rowid, file_path FROM '+tableName)
@@ -29,14 +29,16 @@ for row in tmp:
     dfs = pd.read_excel(row[1], sheetname=None)
     
     for table, df in dfs.items():
-        df.to_sql(t_table, conn)
+        #df.to_sql(t_table, conn)
         print ("Pfle: '{}' tab: '{}' imported".format(row[1], table))
         #TODO copy data to special table and clean Temp table after
         
     
+    
+    
     count+=1
-    if count >0:
-        break
+#    if count >5:
+#        break
         
 ##Clean up data 
 #tmp = c.execute('delete FROM '+tableName)

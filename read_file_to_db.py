@@ -56,7 +56,7 @@ for dirpath, dirnames, filenames in os.walk("L:\Data_Setups"):
         for filename in [f for f in filenames if ptrn.match(f)]:
     #    and ((f.endswith(".xlsx") or f.endswith(".xls")) and '~' not in f )]:
             fpath =os.path.join(dirpath, filename)
-            print ("{},{},{}".format(filename,fpath,os.path.getctime(fpath)))
+            print ("adding {},{},{}".format(filename,fpath,os.path.getctime(fpath)))
             tmp.append((filename,fpath,os.path.getctime(fpath),None))
             good_fn +=1
     
@@ -68,7 +68,7 @@ for dirpath, dirnames, filenames in os.walk("L:\Data_Setups"):
 #       ('6532.xlsx','L:\Data_Setups\6532\docs\6532.xlsx',1,2)]
     
 
-c.executemany("INSERT INTO "+tableName+" VALUES (?,?,?,?)", tmp)
+c.executemany("INSERT OR IGNORE INTO "+tableName+" VALUES (?,?,?,?)", tmp)
 conn.commit()
 
 print ("Found {} good files, omited {} folders".format(good_fn,counting))
